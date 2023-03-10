@@ -16,69 +16,37 @@
             type="LiveData&lt;Boolean>" />
     </data>
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.list.MatchListFragment">
+        tools:context=".ui.matchlist.MatchListFragment">
 
-
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/srlMatchList"
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvMatchList"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_match_list" />
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-        <ProgressBar
-            android:id="@+id/pbMatchList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/margin_large"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="@{showError ? View.VISIBLE : View.GONE}"
-            tools:visibility="gone">
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/transparent"
+            app:elevation="0dp">
 
             <TextView
+                android:id="@+id/tvAllTeam"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@{errorMessage}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                tools:text="@string/no_internet" />
+                android:layout_gravity="end"
+                android:layout_margin="@dimen/margin_small"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="@dimen/margin_small"
+                android:text="@string/str_teams"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed" />
+        </com.google.android.material.appbar.AppBarLayout>
 
-            <Button
-                android:id="@+id/btRetry"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_normal"
-                android:padding="@dimen/margin_normal"
-                android:text="@string/retry_button"
-                android:textAllCaps="false"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        <include
+            android:id="@+id/contentList"
+            layout="@layout/content_api_list"
+            app:showError="@{showError}"
+            app:errorMessage="@{errorMessage}"/>
 
-        </LinearLayout>
-    </FrameLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

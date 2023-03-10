@@ -10,6 +10,7 @@ import com.tngdev.sportevent.network.ApiResource
 import com.tngdev.sportevent.repository.MatchRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,7 +26,7 @@ class MatchListViewModel @Inject constructor(
     val showError = MutableLiveData<Boolean>(false)
 
     fun getMatchList() {
-        Log.d(TAG, "call ListNowPlaying")
+        Timber.d("call getMatchList")
         viewModelScope.launch {
             _matchListResponse.value = ApiResource.Loading()
             _matchListResponse.value = matchRepository.getMatches()

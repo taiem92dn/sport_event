@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.tngdev.sportevent.R
+import com.tngdev.sportevent.databinding.ActivityMainBinding
 import com.tngdev.sportevent.databinding.FragmentMatchListBinding
 import com.tngdev.sportevent.model.MatchItem
 import com.tngdev.sportevent.network.ApiResource
@@ -63,17 +64,17 @@ open class MatchListFragment : Fragment() {
 
     private fun bindEvents() {
 
-        binding.srlMatchList.setOnRefreshListener {
+        binding.contentList.srlList.setOnRefreshListener {
             refreshData()
         }
 
-        binding.btRetry.setOnClickListener {
+        binding.contentList.btRetry.setOnClickListener {
             viewModel.hideError()
             refreshData()
         }
 
         adapter?.onItemClickListener = {
-            navigateToMovieDetail(it)
+            navigateToDetail(it)
         }
     }
 
@@ -85,7 +86,7 @@ open class MatchListFragment : Fragment() {
         }
     }
 
-    private fun navigateToMovieDetail(matchItem: MatchItem) {
+    private fun navigateToDetail(matchItem: MatchItem) {
 //        val action =
 //            MovieListFragmentDirections
 //                .actionMovieListFragmentToMovieDetailFragment(movieItem)
@@ -122,7 +123,7 @@ open class MatchListFragment : Fragment() {
 
     private fun initAdapter() {
         adapter = MatchListAdapter()
-        binding.rvMatchList.also {
+        binding.contentList.rvList.also {
             it.adapter = adapter
             it.setHasFixedSize(true)
         }
@@ -142,11 +143,11 @@ open class MatchListFragment : Fragment() {
     }
 
     private fun showLoading() {
-            binding.srlMatchList.isRefreshing = true
+            binding.contentList.srlList.isRefreshing = true
     }
 
     private fun hideLoading() {
-        binding.srlMatchList.isRefreshing = false
+        binding.contentList.srlList.isRefreshing = false
     }
 
     private fun showSnackbarError(message: CharSequence) {
