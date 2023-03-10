@@ -10,5 +10,15 @@
         android:name="com.tngdev.sportevent.ui.matchlist.MatchListFragment"
         android:label="@string/matchlist_fragment_label"
         tools:layout="@layout/fragment_match_list" >
+
+        <action
+            android:id="@+id/action_MatchListFragment_to_TeamListFragment"
+            app:destination="@id/TeamListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/TeamListFragment"
+        android:name="com.tngdev.sportevent.ui.teams.TeamListFragment"
+        android:label="@string/team_fragment_label"
+        tools:layout="@layout/fragment_team_list" >
     </fragment>
 </navigation>

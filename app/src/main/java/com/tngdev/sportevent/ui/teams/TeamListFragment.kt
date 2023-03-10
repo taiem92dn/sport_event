@@ -1,4 +1,4 @@
-package com.tngdev.sportevent.ui.matchlist
+package com.tngdev.sportevent.ui.teams
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,29 +7,29 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.tngdev.sportevent.R
-import com.tngdev.sportevent.databinding.ActivityMainBinding
-import com.tngdev.sportevent.databinding.FragmentMatchListBinding
-import com.tngdev.sportevent.model.MatchItem
+import com.tngdev.sportevent.databinding.FragmentTeamListBinding
+import com.tngdev.sportevent.model.TeamItem
 import com.tngdev.sportevent.network.ApiResource
-import com.tngdev.sportevent.ui.matchlist.adapter.MatchListAdapter
+import com.tngdev.sportevent.ui.teams.adapter.TeamListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 @AndroidEntryPoint
-open class MatchListFragment : Fragment() {
+open class TeamListFragment : Fragment() {
 
     companion object {
-        fun newInstance() = MatchListFragment()
+        fun newInstance() = TeamListFragment()
     }
 
-    protected val viewModel by lazy { ViewModelProvider(this)[MatchListViewModel::class.java] }
+    protected val viewModel by lazy { ViewModelProvider(this)[TeamListViewModel::class.java] }
 
-    private var _binding: FragmentMatchListBinding? = null
+    private var _binding: FragmentTeamListBinding? = null
     private val binding get() = _binding!!
 
-    private var adapter: MatchListAdapter? = null
+    private var adapter: TeamListAdapter? = null
     private var noInternetSnackbar: Snackbar? = null
     private var isRefreshingData = false
 
@@ -37,7 +37,7 @@ open class MatchListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentMatchListBinding.inflate(inflater, container, false)
+        _binding = FragmentTeamListBinding.inflate(inflater, container, false)
         return _binding?.root
     }
 
@@ -78,31 +78,27 @@ open class MatchListFragment : Fragment() {
             navigateToDetail(it)
         }
 
-        binding.tvAllTeam.setOnClickListener {
-            // navigate to team screen
-            val action =
-                MatchListFragmentDirections
-                    .actionMatchListFragmentToTeamListFragment()
-            findNavController().navigate(action)
+        binding.ivBack.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 
     private fun observeData() {
-        viewModel.matchListResponse.observe(viewLifecycleOwner) {
+        viewModel.teamListResponse.observe(viewLifecycleOwner) {
             showResultData(it)
             if ((it is ApiResource.Loading).not())
                 isRefreshingData = false
         }
     }
 
-    private fun navigateToDetail(matchItem: MatchItem) {
+    private fun navigateToDetail(teamItem: TeamItem) {
 //        val action =
-//            MatchListFragmentDirections
-//                .actionMatchListFragmentToTeamListFragment()
+//            MovieListFragmentDirections
+//                .actionMovieListFragmentToMovieDetailFragment(movieItem)
 //        findNavController().navigate(action)
     }
 
-    private fun showResultData(apiResource: ApiResource<List<MatchItem>>) {
+    private fun showResultData(apiResource: ApiResource<List<TeamItem>>) {
         hideLoading()
         hideNoInternet()
         viewModel.hideError()
@@ -131,15 +127,16 @@ open class MatchListFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        adapter = MatchListAdapter()
+        adapter = TeamListAdapter()
         binding.contentList.rvList.also {
+            it.layoutManager = GridLayoutManager(requireContext(), 2)
             it.adapter = adapter
             it.setHasFixedSize(true)
         }
     }
 
     open fun loadListData() {
-        viewModel.getMatchList()
+        viewModel.getAllTeam()
     }
 
     private fun refreshData() {
@@ -147,7 +144,7 @@ open class MatchListFragment : Fragment() {
         loadListData()
     }
 
-    private fun showData(data: List<MatchItem>) {
+    private fun showData(data: List<TeamItem>) {
         adapter?.submitList(data)
     }
 

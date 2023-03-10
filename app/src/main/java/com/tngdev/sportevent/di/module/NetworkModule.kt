@@ -4,8 +4,11 @@ import android.app.Application
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.tngdev.sportevent.data.MatchDataSource
 import com.tngdev.sportevent.data.RemoteMatchDataSource
+import com.tngdev.sportevent.data.RemoteTeamDataSource
+import com.tngdev.sportevent.data.TeamDataSource
 import com.tngdev.sportevent.network.INetworkCheckService
 import com.tngdev.sportevent.network.MatchService
+import com.tngdev.sportevent.network.TeamService
 import com.tngdev.sportevent.util.Utils
 import dagger.Module
 import dagger.Provides
@@ -23,8 +26,20 @@ import javax.inject.Singleton
 object NetworkModule {
     @Provides
     @Singleton
+    fun provideTeamDataSource(teamService: TeamService): TeamDataSource {
+        return RemoteTeamDataSource(teamService)
+    }
+
+    @Provides
+    @Singleton
     fun provideMatchDataSource(matchService: MatchService): MatchDataSource {
         return RemoteMatchDataSource(matchService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTeamService(@Named("non_auth_retrofit") retrofit: Retrofit): TeamService {
+        return retrofit.create(TeamService::class.java)
     }
 
     @Provides
