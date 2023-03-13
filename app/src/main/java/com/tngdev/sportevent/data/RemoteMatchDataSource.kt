@@ -7,8 +7,8 @@ class RemoteMatchDataSource constructor(val matchService: MatchService) : MatchD
     override suspend fun getMatches(): List<MatchItem> {
         val matchesList = matchService.getMatches()
         return mutableListOf<MatchItem>().apply {
-            addAll(matchesList.matches.previous)
-            addAll(matchesList.matches.upcoming)
+            addAll(matchesList.matches.upcoming.sortedByDescending { it.date })
+            addAll(matchesList.matches.previous.sortedByDescending { it.date })
         }
     }
 }

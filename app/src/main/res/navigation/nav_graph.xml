@@ -20,5 +20,17 @@
         android:name="com.tngdev.sportevent.ui.teams.TeamListFragment"
         android:label="@string/team_fragment_label"
         tools:layout="@layout/fragment_team_list" >
+        <action
+            android:id="@+id/action_TeamListFragment_to_teamDetailFragment"
+            app:destination="@id/teamDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/teamDetailFragment"
+        android:name="com.tngdev.sportevent.ui.teamdetail.TeamDetailFragment"
+        android:label="TeamDetailFragment" >
+
+        <argument
+            android:name="teamItem"
+            app:argType="com.tngdev.sportevent.model.TeamItem" />
     </fragment>
 </navigation>

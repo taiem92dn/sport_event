@@ -1,4 +1,4 @@
-package com.tngdev.sportevent.ui.teams
+package com.tngdev.sportevent.ui.teamdetail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,37 +7,39 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.tngdev.sportevent.R
-import com.tngdev.sportevent.databinding.FragmentTeamListBinding
-import com.tngdev.sportevent.model.TeamItem
+import com.tngdev.sportevent.databinding.FragmentTeamDetailBinding
+import com.tngdev.sportevent.model.MatchItem
 import com.tngdev.sportevent.network.ApiResource
-import com.tngdev.sportevent.ui.teams.adapter.TeamListAdapter
+import com.tngdev.sportevent.ui.matchlist.adapter.MatchListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 @AndroidEntryPoint
-open class TeamListFragment : Fragment() {
+open class TeamDetailFragment : Fragment() {
 
     companion object {
-        fun newInstance() = TeamListFragment()
+        fun newInstance() = TeamDetailFragment()
     }
 
-    protected val viewModel by lazy { ViewModelProvider(this)[TeamListViewModel::class.java] }
+    protected val viewModel by lazy { ViewModelProvider(this)[TeamDetailViewModel::class.java] }
 
-    private var _binding: FragmentTeamListBinding? = null
+    private var _binding: FragmentTeamDetailBinding? = null
     private val binding get() = _binding!!
 
-    private var adapter: TeamListAdapter? = null
+    private var adapter: MatchListAdapter? = null
     private var noInternetSnackbar: Snackbar? = null
     private var isRefreshingData = false
+
+    val args: TeamDetailFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentTeamListBinding.inflate(inflater, container, false)
+        _binding = FragmentTeamDetailBinding.inflate(inflater, container, false)
         return _binding?.root
     }
 
@@ -60,6 +62,7 @@ open class TeamListFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             showError = viewModel.showError
             errorMessage = viewModel.errorMessage
+            teamItem = args.teamItem
         }
     }
 
@@ -84,20 +87,21 @@ open class TeamListFragment : Fragment() {
     }
 
     private fun observeData() {
-        viewModel.teamListResponse.observe(viewLifecycleOwner) {
+        viewModel.matchListResponse.observe(viewLifecycleOwner) {
             showResultData(it)
             if ((it is ApiResource.Loading).not())
                 isRefreshingData = false
         }
     }
 
-    private fun navigateToDetail(teamItem: TeamItem) {
-        val action = TeamListFragmentDirections
-            .actionTeamListFragmentToTeamDetailFragment(teamItem)
-        findNavController().navigate(action)
+    private fun navigateToDetail(matchItem: MatchItem) {
+//        val action =
+//            MatchListFragmentDirections
+//                .actionMatchListFragmentToTeamListFragment()
+//        findNavController().navigate(action)
     }
 
-    private fun showResultData(apiResource: ApiResource<List<TeamItem>>) {
+    private fun showResultData(apiResource: ApiResource<List<MatchItem>>) {
         hideLoading()
         hideNoInternet()
         viewModel.hideError()
@@ -126,16 +130,15 @@ open class TeamListFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        adapter = TeamListAdapter()
+        adapter = MatchListAdapter()
         binding.contentList.rvList.also {
-            it.layoutManager = GridLayoutManager(requireContext(), 2)
             it.adapter = adapter
             it.setHasFixedSize(true)
         }
     }
 
     open fun loadListData() {
-        viewModel.getAllTeam()
+        viewModel.getTeamMatches(args.teamItem.id)
     }
 
     private fun refreshData() {
@@ -143,12 +146,12 @@ open class TeamListFragment : Fragment() {
         loadListData()
     }
 
-    private fun showData(data: List<TeamItem>) {
+    private fun showData(data: List<MatchItem>) {
         adapter?.submitList(data)
     }
 
     private fun showLoading() {
-            binding.contentList.srlList.isRefreshing = true
+        binding.contentList.srlList.isRefreshing = true
     }
 
     private fun hideLoading() {

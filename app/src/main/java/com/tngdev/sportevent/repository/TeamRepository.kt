@@ -28,4 +28,17 @@ class TeamRepository @Inject constructor(
             ApiResource.Error(e.message)
         }
     }
+
+    suspend fun getTeamMatches(teamId: String): ApiResource<List<MatchItem>> {
+        if (!networkCheckService.hasInternet()) {
+            return ApiResource.NoInternet(null)
+        }
+
+        return try {
+            ApiResource.Success(teamDataSource.getTeamMatches(teamId))
+        } catch (e: Throwable) {
+            e.printStackTrace()
+            ApiResource.Error(e.message)
+        }
+    }
 }

@@ -5,6 +5,6 @@ data class MatchItem(
     val description: String,
     val home: String,
     val away: String,
-    val winner: String,
+    val winner: String?,
     val highlights: String,
 )

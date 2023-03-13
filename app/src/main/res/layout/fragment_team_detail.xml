@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="androidx.lifecycle.LiveData" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="errorMessage"
+            type="LiveData&lt;String>" />
+
+        <variable
+            name="showError"
+            type="LiveData&lt;Boolean>" />
+
+        <import type="com.tngdev.sportevent.model.TeamItem" />
+
+        <variable
+            name="teamItem"
+            type="TeamItem" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.matchlist.MatchListFragment">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:elevation="0dp">
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="10dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_arrow_back_24"
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed" />
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_margin="@dimen/margin_normal"
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+                imageUrl="@{teamItem.logo}"
+                tools:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:layout_marginEnd="@dimen/margin_normal"
+                android:layout_marginBottom="@dimen/margin_normal"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+                android:text="@{teamItem.name}"
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+                tools:text="abcxyz"/>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <include
+            android:id="@+id/contentList"
+            layout="@layout/content_api_list"
+            app:errorMessage="@{errorMessage}"
+            app:showError="@{showError}" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
