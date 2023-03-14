@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="androidx.lifecycle.LiveData" />
+
+        <import type="android.view.View" />
 
         <import type="com.tngdev.sportevent.model.MatchItem" />
 
@@ -11,6 +14,9 @@
             name="matchItem"
             type="MatchItem" />
 
+        <variable
+            name="isSetReminder"
+            type="LiveData&lt;Boolean>" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -130,7 +136,21 @@
             app:layout_constraintTop_toBottomOf="@id/tvAway"
             android:text="@string/text_winner" />
 
-<!--        This PlayerView cause unable to render UI in the preview section-->
+        <Button
+            android:id="@+id/btMatchReminder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_normal"
+            android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+            android:textColor="@color/black"
+            matchReminder="@{matchItem}"
+            showSetReminder="@{isSetReminder}"
+            style="?attr/materialButtonOutlinedStyle"
+            tools:text="@string/text_set_reminder_for_this_match"
+            tools:drawableLeft="@drawable/ic_check_24"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
+            app:layout_constraintTop_toBottomOf="@+id/tvAwayWinner" />
+
         <androidx.media3.ui.PlayerView
             android:id="@+id/player_view"
             android:layout_width="match_parent"

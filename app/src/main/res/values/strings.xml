@@ -7,9 +7,6 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-
     <string name="no_internet">No Internet connection. Make sure that Wifi or mobile data is turned on, then try again.</string>
     <string name="error_loading_list_tap_to_retry">Error Loading\nTap to retry</string>
     <string name="retry_button">Retry</string>
@@ -17,4 +14,16 @@
     <string name="str_teams">Teams</string>
     <string name="text_winner">Winner</string>
     <string name="text_highlight">Highlight</string>
+    <string name="text_set_reminder_for_this_match">Set reminder for this match</string>
+    <string name="text_date_in_a_wrong_format">Date in a wrong format</string>
+    <string name="text_remind_the_match_start_before_10_minutes">%s will start shortly after 10 minutes</string>
+    <string name="text_remind_the_match_start_right_now">%s is about to start right now</string>
+
+    <string name="default_notification_channel_id">1234567890</string>
+    <string name="default_notification_channel_name">sport_event</string>
+    <string name="notification_title_reminder">Match Reminder</string>
+    <string name="text_set_reminder_successfully">Set reminder successfully</string>
+    <string name="text_cancel_reminder_this_match">Cancel reminder this match</string>
+    <string name="text_cancel_reminder_successfully">Cancel reminder successfully</string>
+
 </resources>

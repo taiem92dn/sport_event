@@ -1,17 +1,18 @@
 package com.tngdev.sportevent.repository
 
+import com.tngdev.sportevent.data.LocalMatchDataSource
 import com.tngdev.sportevent.data.MatchDataSource
 import com.tngdev.sportevent.model.MatchItem
-import com.tngdev.sportevent.model.MatchesList
 import com.tngdev.sportevent.network.ApiResource
 import com.tngdev.sportevent.network.INetworkCheckService
-import com.tngdev.sportevent.network.MatchService
 import javax.inject.Inject
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Singleton
 class MatchRepository @Inject constructor(
-    private val matchDataSource: MatchDataSource,
+    private val  remoteMatchDataSource: MatchDataSource,
+    private val  localMatchDataSource: LocalMatchDataSource,
     private var networkCheckService: INetworkCheckService
 ) {
     private val TAG = MatchRepository::class.java.simpleName
@@ -22,10 +23,22 @@ class MatchRepository @Inject constructor(
         }
 
         return try {
-            ApiResource.Success(matchDataSource.getMatches())
+            ApiResource.Success(remoteMatchDataSource.getMatches())
         } catch (e: Throwable) {
             e.printStackTrace()
             ApiResource.Error(e.message)
         }
+    }
+
+    fun saveMatchWorker(matchDateTime: String, workerId: String) {
+        localMatchDataSource.saveMatchWorker(matchDateTime, workerId)
+    }
+
+    fun getMatchWorker(matchDateTime: String): String? {
+        return localMatchDataSource.getMatchWorker(matchDateTime)
+    }
+
+    fun deleteMatchWorker(matchDateTime: String) {
+        return localMatchDataSource.deleteMatchWorker(matchDateTime)
     }
 }

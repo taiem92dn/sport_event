@@ -2,8 +2,11 @@ package com.tngdev.sportevent.ui.matchlist.adapter
 
 import android.graphics.Color
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.databinding.BindingAdapter
+import com.tngdev.sportevent.R
 import com.tngdev.sportevent.model.MatchItem
 import com.tngdev.sportevent.util.formatDateStr
 import com.tngdev.sportevent.util.formatTimeStr
@@ -72,5 +75,37 @@ fun showAwayWinner(textView: TextView, matchItem: MatchItem) {
         } else {
             View.INVISIBLE
         }
+}
+
+@BindingAdapter("matchReminder")
+fun showMatchReminder(button: Button, matchItem: MatchItem) {
+    button.visibility =
+        if (matchItem.highlights == null)
+            View.VISIBLE
+        else
+            View.GONE
+}
+
+@BindingAdapter("showSetReminder")
+fun showSetReminder(button: Button, isSetReminder: Boolean) {
+    val context = button.context
+    if (isSetReminder) {
+        button.text = context.getString(R.string.text_cancel_reminder_this_match)
+        button.setCompoundDrawablesWithIntrinsicBounds(
+            AppCompatResources.getDrawable(context, R.drawable.ic_cancel_24),
+            null,
+            null,
+            null
+        )
+    }
+    else {
+        button.text = context.getString(R.string.text_set_reminder_for_this_match)
+        button.setCompoundDrawablesWithIntrinsicBounds(
+            AppCompatResources.getDrawable(context, R.drawable.ic_check_24),
+            null,
+            null,
+            null
+        )
+    }
 }
 
