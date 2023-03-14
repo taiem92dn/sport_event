@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_MatchListFragment_to_TeamListFragment"
             app:destination="@id/TeamListFragment" />
+        <action
+            android:id="@+id/action_MatchListFragment_to_matchDetailFragment"
+            app:destination="@id/matchDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/TeamListFragment"
@@ -32,5 +35,14 @@
         <argument
             android:name="teamItem"
             app:argType="com.tngdev.sportevent.model.TeamItem" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/matchDetailFragment"
+        android:name="com.tngdev.sportevent.ui.matchdetail.MatchDetailFragment"
+        android:label="MatchDetailFragment" >
+        <argument
+            android:name="matchItem"
+            app:argType="com.tngdev.sportevent.model.MatchItem" />
     </fragment>
 </navigation>

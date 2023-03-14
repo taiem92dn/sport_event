@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.tngdev.sportevent.model.MatchItem" />
+
+        <variable
+            name="matchItem"
+            type="MatchItem" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="10dp"
+            android:src="@drawable/ic_arrow_back_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed" />
+
+
+        <TextView
+            android:id="@+id/tvMatchDate"
+            matchDate="@{matchItem}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:paddingStart="@dimen/margin_normal"
+            android:paddingEnd="@dimen/margin_normal"
+            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+            app:layout_constraintStart_toStartOf="@+id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@+id/tvHomeWinner"
+            tools:text="March 9 2020" />
+
+        <TextView
+            android:id="@+id/tvMatchTime"
+            matchTime="@{matchItem}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/margin_normal"
+            android:paddingEnd="@dimen/margin_normal"
+            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+            app:layout_constraintStart_toStartOf="@+id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@+id/tvMatchDate"
+            tools:text="18:00" />
+
+
+        <TextView
+            android:id="@+id/tvHome"
+            matchHome="@{matchItem}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            app:layout_constraintEnd_toStartOf="@+id/tvVersus"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="@+id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@+id/ivBack"
+            tools:text="Team Home" />
+
+        <TextView
+            android:id="@+id/tvHomeWinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+            android:textColor="@color/yellow_500"
+            showHomeWinner="@{matchItem}"
+            app:layout_constraintEnd_toEndOf="@+id/tvHome"
+            app:layout_constraintStart_toStartOf="@+id/tvHome"
+            app:layout_constraintTop_toBottomOf="@id/tvHome"
+            android:text="@string/text_winner" />
+
+        <TextView
+            android:id="@+id/tvVersus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_normal"
+            android:text="vs"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            app:layout_constraintBottom_toBottomOf="@+id/tvHome"
+            app:layout_constraintEnd_toStartOf="@+id/tvAway"
+            app:layout_constraintStart_toEndOf="@+id/tvHome"
+            app:layout_constraintTop_toTopOf="@+id/tvHome" />
+
+        <TextView
+            android:id="@+id/tvAway"
+            matchAway="@{matchItem}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            app:layout_constraintBottom_toBottomOf="@+id/tvHome"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
+            app:layout_constraintStart_toEndOf="@+id/tvVersus"
+            app:layout_constraintTop_toTopOf="@+id/tvHome"
+            tools:text="Team Away" />
+
+        <TextView
+            android:id="@+id/tvHighlight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_large"
+            android:text="@string/text_highlight"
+            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+            app:layout_constraintStart_toStartOf="@+id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@+id/tvMatchTime" />
+
+
+        <TextView
+            android:id="@+id/tvAwayWinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+            android:textColor="@color/yellow_500"
+            showAwayWinner="@{matchItem}"
+            app:layout_constraintEnd_toEndOf="@+id/tvAway"
+            app:layout_constraintStart_toStartOf="@+id/tvAway"
+            app:layout_constraintTop_toBottomOf="@id/tvAway"
+            android:text="@string/text_winner" />
+
+<!--        This PlayerView cause unable to render UI in the preview section-->
+        <androidx.media3.ui.PlayerView
+            android:id="@+id/player_view"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:background="@android:color/black"
+            app:auto_show="false"
+            app:layout_constraintTop_toBottomOf="@+id/tvHighlight"
+            app:show_buffering="when_playing"
+            app:show_shuffle_button="true" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="20dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

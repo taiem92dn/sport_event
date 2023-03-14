@@ -24,3 +24,23 @@ fun formatDateStr(dateline: String?): String? {
     }
     return dateFormat
 }
+fun formatTimeStr(dateline: String?): String? {
+    var dateFormat = ""
+    if (dateline != null) {
+        val formatStrings = listOf(
+            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+//            "EEE MMM dd HH:mm:ss 'GMT+07:00' yyyy"
+        )
+        formatStrings.map { f ->
+            try {
+                val parse = SimpleDateFormat(f, Locale.getDefault())
+                parse.timeZone = TimeZone.getTimeZone("Etc/UTC")
+                val format = SimpleDateFormat("HH:mm", Locale.getDefault())
+                dateFormat = format.format(parse.parse(dateline)!!)
+            } catch (e: ParseException) {
+//            e.printStackTrace()
+            }
+        }
+    }
+    return dateFormat
+}

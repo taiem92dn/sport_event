@@ -15,4 +15,6 @@
     <string name="retry_button">Retry</string>
     <string name="unable_to_get_data">Unable to get data</string>
     <string name="str_teams">Teams</string>
+    <string name="text_winner">Winner</string>
+    <string name="text_highlight">Highlight</string>
 </resources>

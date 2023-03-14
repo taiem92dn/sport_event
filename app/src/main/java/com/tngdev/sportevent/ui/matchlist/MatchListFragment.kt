@@ -96,10 +96,9 @@ open class MatchListFragment : Fragment() {
     }
 
     private fun navigateToDetail(matchItem: MatchItem) {
-//        val action =
-//            MatchListFragmentDirections
-//                .actionMatchListFragmentToTeamListFragment()
-//        findNavController().navigate(action)
+        val action =
+            MatchListFragmentDirections.actionMatchListFragmentToMatchDetailFragment(matchItem)
+        findNavController().navigate(action)
     }
 
     private fun showResultData(apiResource: ApiResource<List<MatchItem>>) {
